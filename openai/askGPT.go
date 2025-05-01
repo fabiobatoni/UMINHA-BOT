@@ -36,11 +36,15 @@ func AskGPT(question string) (string, error) {
 	}
 	var res Response
 
-	// Unmarshal the response body
 	err = json.Unmarshal(resp.Body(), &res)
 	if err != nil {
 		return "", err
 	}
 
+	if len(res.Choices) == 0 {
+		return "❌ A resposta da OpenAI veio vazia. Verifique se sua chave de API está correta e se você tem acesso ao modelo.", nil
+	}
+
 	return res.Choices[0].Message.Content, nil
+
 }
