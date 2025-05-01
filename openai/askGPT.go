@@ -12,7 +12,7 @@ func AskGPT(question string) (string, error) {
 	client := resty.New()
 
 	resp, err := client.R().
-		SetHeader("Authorization", "Bearer "+os.Getenv("OPENAI_API_KEY")).
+		SetHeader("Authorization", "Bearer "+os.Getenv("OPEN_AI_API_KEY")).
 		SetHeader("Content-Type", "application/json").
 		SetBody(map[string]interface{}{
 			"model": "gpt-3.5-turbo",
