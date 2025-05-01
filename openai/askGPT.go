@@ -31,10 +31,6 @@ func AskGPT(question string) (string, error) {
 		return "", err
 	}
 
-	// Log para ver o que está sendo retornado pela API
-	fmt.Println("Resposta da API:", string(resp.Body()))
-
-	// Estrutura da resposta da API Groq (ajuste conforme necessário)
 	type Choice struct {
 		Message struct {
 			Content string `json:"content"`
@@ -50,11 +46,11 @@ func AskGPT(question string) (string, error) {
 		return "", err
 	}
 
-	fmt.Println("Resposta decodificada:", res)
-
 	if len(res.Choices) == 0 {
 		return "Desculpe, não consegui entender sua pergunta ou a resposta não foi gerada corretamente.", nil
 	}
+
+	fmt.Println("Resposta:", res.Choices[0].Message.Content)
 
 	return res.Choices[0].Message.Content, nil
 }
