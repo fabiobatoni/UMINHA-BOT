@@ -34,16 +34,31 @@ func messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
 	}
 
 	if strings.HasPrefix(m.Content, "!dica") {
-		pergunta := strings.TrimPrefix(m.Content, "!poe2 ")
+		pergunta := strings.TrimPrefix(m.Content, "!dica ")
 		resposta, err := openai.AskGPT(pergunta)
 		if err != nil {
 			s.ChannelMessageSend(m.ChannelID, "Erro ao consultar o especialista POE2: "+err.Error())
 			return
 		}
 
-		fmt.Println("Pergunta:", pergunta)
-		fmt.Println("Resposta:", resposta)
-		s.ChannelMessageSend(m.ChannelID, resposta)
+		if len(resposta) > 2000 {
+
+			for i := 0; i < len(resposta); i += 2000 {
+				end := i + 2000
+				if end > len(resposta) {
+					end = len(resposta)
+				}
+
+				if _, err := s.ChannelMessageSend(m.ChannelID, resposta[i:end]); err != nil {
+					fmt.Println("Erro ao enviar mensagem para o Discord:", err)
+				}
+			}
+		} else {
+
+			if _, err := s.ChannelMessageSend(m.ChannelID, resposta); err != nil {
+				fmt.Println("Erro ao enviar mensagem para o Discord:", err)
+			}
+		}
 	}
 
 	if strings.HasPrefix(m.Content, "!help") {
