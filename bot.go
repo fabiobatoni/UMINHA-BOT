@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strings"
 	"uminha-bot/openai"
 
@@ -39,6 +40,9 @@ func messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
 			s.ChannelMessageSend(m.ChannelID, "Erro ao consultar o especialista POE2: "+err.Error())
 			return
 		}
+
+		fmt.Println("Pergunta:", pergunta)
+		fmt.Println("Resposta:", resposta)
 		s.ChannelMessageSend(m.ChannelID, resposta)
 	}
 

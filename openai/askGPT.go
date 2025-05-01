@@ -2,7 +2,6 @@ package openai
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 
 	"github.com/go-resty/resty/v2"
@@ -49,8 +48,6 @@ func AskGPT(question string) (string, error) {
 	if len(res.Choices) == 0 {
 		return "Desculpe, não consegui entender sua pergunta ou a resposta não foi gerada corretamente.", nil
 	}
-
-	fmt.Println("Resposta:", res.Choices[0].Message.Content)
 
 	return res.Choices[0].Message.Content, nil
 }
