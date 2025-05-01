@@ -10,15 +10,13 @@ import (
 func AskGPT(question string) (string, error) {
 	client := resty.New()
 
-	// Definir a URL da API Groq (substitua com o URL real se necessário)
 	url := "https://api.groq.com/openai/v1/chat/completions"
 
-	// Enviar a solicitação com a chave da API Groq
 	resp, err := client.R().
-		SetHeader("Authorization", "Bearer "+os.Getenv("GROQ_API_KEY")). // Usando a chave da Groq
+		SetHeader("Authorization", "Bearer "+os.Getenv("GROQ_API_KEY")).
 		SetHeader("Content-Type", "application/json").
 		SetBody(map[string]interface{}{
-			"model": "llama-3.3-70b-versatile", // Use o modelo que a Groq oferece
+			"model": "llama-3.3-70b-versatile",
 			"messages": []map[string]string{
 				{"role": "system", "content": "Você é um especialista em Path of Exile 2. Responda como um jogador veterano, com foco em builds, farm e progressão."},
 				{"role": "user", "content": question},
