@@ -2,7 +2,6 @@ package openai
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 
 	"github.com/go-resty/resty/v2"
@@ -11,17 +10,19 @@ import (
 func AskGPT(question string) (string, error) {
 	client := resty.New()
 
+	url := "https://api.groq.com/openai/v1/chat/completions"
+
 	resp, err := client.R().
-		SetHeader("Authorization", "Bearer "+os.Getenv("OPEN_AI_API_KEY")).
+		SetHeader("Authorization", "Bearer "+os.Getenv("GROQ_API_KEY")).
 		SetHeader("Content-Type", "application/json").
 		SetBody(map[string]interface{}{
-			"model": "gpt-3.5-turbo",
+			"model": "mistral",
 			"messages": []map[string]string{
 				{"role": "system", "content": "Você é um especialista em Path of Exile 2. Responda como um jogador veterano, com foco em builds, farm e progressão."},
 				{"role": "user", "content": question},
 			},
 		}).
-		Post("https://api.openai.com/v1/chat/completions")
+		Post(url)
 
 	if err != nil {
 		return "", err
@@ -42,12 +43,5 @@ func AskGPT(question string) (string, error) {
 		return "", err
 	}
 
-	fmt.Println("Resposta da OpenAI:", string(resp.Body()))
-
-	if len(res.Choices) == 0 {
-		return "❌ A resposta da OpenAI veio vazia. Verifique se sua chave de API está correta e se você tem acesso ao modelo.", nil
-	}
-
 	return res.Choices[0].Message.Content, nil
-
 }
