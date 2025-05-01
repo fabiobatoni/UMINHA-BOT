@@ -2,6 +2,7 @@ package openai
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 
 	"github.com/go-resty/resty/v2"
@@ -40,6 +41,8 @@ func AskGPT(question string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+
+	fmt.Println("Resposta da OpenAI:", string(resp.Body()))
 
 	if len(res.Choices) == 0 {
 		return "❌ A resposta da OpenAI veio vazia. Verifique se sua chave de API está correta e se você tem acesso ao modelo.", nil
