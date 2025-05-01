@@ -19,7 +19,7 @@ func AskGPT(question string) (string, error) {
 		SetHeader("Authorization", "Bearer "+os.Getenv("GROQ_API_KEY")). // Usando a chave da Groq
 		SetHeader("Content-Type", "application/json").
 		SetBody(map[string]interface{}{
-			"model": "mistral", // Use o modelo que a Groq oferece
+			"model": "llama-3.3-70b-versatile", // Use o modelo que a Groq oferece
 			"messages": []map[string]string{
 				{"role": "system", "content": "Você é um especialista em Path of Exile 2. Responda como um jogador veterano, com foco em builds, farm e progressão."},
 				{"role": "user", "content": question},
