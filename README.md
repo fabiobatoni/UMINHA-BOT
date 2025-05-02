@@ -41,7 +41,7 @@ Um bot do Discord criado para auxiliar jogadores de **Path of Exile 2**, trazend
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/uminha-bot.git
+   git clone https://github.com/fabiobatoni/uminha-bot.git
    cd uminha-bot
    ```
 
